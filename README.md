@@ -6,7 +6,9 @@ Certificate Downloader 是 Java 微信支付平台证书的命令行下载工具
 
 ## 使用
 
-该工具已经通过 Maven 打包成 CertificateDownloader.jar，可执行  `java -jar CertificateDownloader.jar -h `，查看帮助：
+该工具已经通过 Maven 打包成 CertificateDownloader.jar，可在 [release ](https://github.com/EliasZzz/CertificateDownloader/releases) 中下载。
+
+执行  `java -jar CertificateDownloader.jar -h `，查看帮助：
 
 ![1564047129669](images/help.png)
 
