@@ -1,6 +1,6 @@
 # Certificate Downloader
 
-Certificate Downloader 是 Java 的微信支付平台证书的命令行下载工具。该工具可从 `https://api.mch.weixin.qq.com/v3/certificates` 接口获取商户可用证书，并使用 [APIv3 密钥](https://wechatpay-api.gitbook.io/wechatpay-api-v3/ren-zheng/api-v3-mi-yao) 和 AES_256_GCM 算法进行解密，并把解密后证书下载到指定位置。
+Certificate Downloader 是 Java 微信支付平台证书的命令行下载工具。该工具可从 `https://api.mch.weixin.qq.com/v3/certificates` 接口获取商户可用证书，并使用 [APIv3 密钥](https://wechatpay-api.gitbook.io/wechatpay-api-v3/ren-zheng/api-v3-mi-yao) 和 AES_256_GCM 算法进行解密，并把解密后证书下载到指定位置。
 
 该工具使用了 [wechatpay-apache-httpclient]()、[Maven](https://github.com/apache/maven)、[picocli](https://github.com/remkop/picocli)、[gson]()、[lombok](https://github.com/rzwitserloot/lombok) 等库。
 
@@ -21,6 +21,12 @@ Certificate Downloader 是 Java 的微信支付平台证书的命令行下载工
 非必需参数有：
 
 - 微信支付证书，用于验签，即 `-c` 
+
+完整命令如：
+
+```
+java -jar CertificateDownloader.jar -k apiV3key -m mchId -f mchPrivateKeyFilePath -s mchSerialNo -o outputFilePath -c wechatpayCertificateFilePath
+```
 
 ## 常见问题
 
