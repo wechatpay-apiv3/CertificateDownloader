@@ -27,7 +27,7 @@ Certificate Downloader 是 Java 微信支付 APIv3 平台证书的命令行下�
 完整命令如：
 
 ```
-java -jar CertificateDownloader.jar -k apiV3key -m mchId -f mchPrivateKeyFilePath -s mchSerialNo -o outputFilePath -c wechatpayCertificateFilePath
+java -jar CertificateDownloader.jar -k ${apiV3key} -m ${mchId} -f ${mchPrivateKeyFilePath} -s ${mchSerialNo} -o ${outputFilePath} -c ${wechatpayCertificateFilePath}
 ```
 
 ## 常见问题
