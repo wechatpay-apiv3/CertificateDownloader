@@ -38,6 +38,12 @@ java -jar CertificateDownloader.jar -k ${apiV3key} -m ${mchId} -f ${mchPrivateKe
 
 为解决这个“死循环”，可以临时跳过验签，来获得证书。也就是说可以不提供微信支付证书参数（-c 参数）来下载，在下载得到证书后，**工具会使用证书对报文的签名进行验证**，**如果通过则说明证书正确**。
 
+### 证书下载接口是如何保证安全的
+
+- 微信支付接口要求所有 API 请求使用 HTTPS，并强调不应忽略服务器证书验证的错误
+- 在发送请求需要用商户私钥进行签名；而对于应答，商户需要通过微信支付平台证书进行验签
+- 应答的证书是通过 AES-256-GCM 和共享的对称密钥进行加密的
+
 ## 参考
 
 - [微信支付 wechatpay-apache-httpclient 文档](https://github.com/wechatpay-apiv3/wechatpay-apache-httpclient/blob/master/README.md)
