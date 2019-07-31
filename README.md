@@ -49,10 +49,14 @@ java -jar CertificateDownloader.jar -k ${apiV3key} -m ${mchId} -f ${mchPrivateKe
 ### 如何使用信任链验证平台证书
 
 使用 openssl 工具，通过证书信任链验证平台证书：
-- 首先，从微信支付商户平台下载平台证书信任链 CertTrustChain.p7b，并将它转换为 pem 证书格式。
-  `openssl pkcs7 -print_certs -in CertTrustChain.p7b -inform der -out CertTrustChain.pem`
-- 然后，-CAfile file 指定受信任的证书，验证下载的平台证书
-  `openssl verify -verbose -CAfile ./CertTrustChain.pem ./WeChatPayPlatform.pem` 
+- 首先，从微信支付商户平台下载平台证书信任链 [CertTrustChain.p7b](https://wx.gtimg.com/mch/files/CertTrustChain.p7b)，并将它转换为 pem 证书格式：
+  ```
+  openssl pkcs7 -print_certs -in CertTrustChain.p7b -inform der -out CertTrustChain.pem
+  ```
+- 然后，-CAfile file 指定受信任的证书，验证下载的平台证书：
+  ```
+  openssl verify -verbose -CAfile ./CertTrustChain.pem ./WeChatPayPlatform.pem
+  ``` 
 
 详见 **参考 2**。
 
