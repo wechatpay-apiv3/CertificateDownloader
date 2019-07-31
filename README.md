@@ -40,9 +40,21 @@ java -jar CertificateDownloader.jar -k ${apiV3key} -m ${mchId} -f ${mchPrivateKe
 
 ### 证书下载接口是如何保证安全的
 
-- 微信支付接口要求所有 API 请求使用 HTTPS，并强调不应忽略服务器证书验证的错误
-- 在发送请求需要用商户私钥进行签名；而对于应答，商户需要通过微信支付平台证书进行验签
-- 应答的证书是通过 AES-256-GCM 和共享的对称密钥进行加密的
+- **HTTPS**：微信支付接口要求所有 API 请求使用 HTTPS，并强调不应忽略服务器证书验证的错误（必须）
+- **AES 加密**：微信支付在回调通知和平台证书下载接口中，对关键信息进行了 AES-256-GCM 加密，所以商户得到应答后，需要使用与平台共享的对称密钥，解密报文中的证书（必须）
+- **报文验签**：微信支付会在应答的 HTTP 头包含签名，商户应通过解密得到的证书，来验证报文的签名（必须）
+- **核对颁发者**：使用证书查看工具，核对证书的颁发者为 **Tenpay.com Root CA**（强烈推荐）
+- **信任链验证**：通过证书信任链验证平台证书（强烈推荐）
+
+### 如何使用信任链验证平台证书
+
+使用 openssl 工具，通过证书信任链验证平台证书：
+- 首先，从微信支付商户平台下载平台证书信任链 CertTrustChain.p7b，并将它转换为 pem 证书格式。
+  `openssl pkcs7 -print_certs -in CertTrustChain.p7b -inform der -out CertTrustChain.pem`
+- 然后，-CAfile file 指定受信任的证书，验证下载的平台证书
+  `openssl verify -verbose -CAfile ./CertTrustChain.pem ./WeChatPayPlatform.pem` 
+
+详见 **参考 2**。
 
 ## 参考
 
