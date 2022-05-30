@@ -12,7 +12,6 @@ import com.wechat.pay.contrib.apache.httpclient.auth.Verifier;
 import com.wechat.pay.contrib.apache.httpclient.auth.WechatPay2Validator;
 import com.wechat.pay.contrib.apache.httpclient.util.AesUtil;
 import com.wechat.pay.contrib.apache.httpclient.util.PemUtil;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -20,7 +19,6 @@ import org.apache.http.util.EntityUtils;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import sun.security.x509.X509CertImpl;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
