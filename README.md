@@ -4,15 +4,29 @@ Certificate Downloader 是 Java 微信支付 APIv3 平台证书的命令行下�
 
 该工具使用了 [wechatpay-apache-httpclient]()、[Maven](https://github.com/apache/maven)、[picocli](https://github.com/remkop/picocli)、[gson]()、[lombok](https://github.com/rzwitserloot/lombok) 等库。
 
-## 使用
+## 前置条件
+
++ JRE 1.8+
+
+## 快速开始
 
 该工具已经通过 Maven 打包成 CertificateDownloader.jar，可在 [release ](https://github.com/EliasZzz/CertificateDownloader/releases) 中下载。
 
-执行  `java -jar CertificateDownloader.jar -h `，查看帮助：
+下载 jar 包后，如果你没有证书，第一次下载证书的命令如下，具体说明请看 [常见问题-第一次下载证书](#如何第一次下载证书)：
 
-![1564047129669](images/help.png)
+```bash
+java -jar CertificateDownloader.jar -k ${apiV3key} -m ${mchId} -f ${mchPrivateKeyFilePath} -s ${mchSerialNo} -o ${outputFilePath}
+```
 
-这里，必需参数有：
+如果你已有微信支付平台证书，完整命令如：
+
+```
+java -jar CertificateDownloader.jar -k ${apiV3key} -m ${mchId} -f ${mchPrivateKeyFilePath} -s ${mchSerialNo} -o ${outputFilePath} -c ${wechatpayCertificateFilePath}
+```
+
+## 使用
+
+必需参数有：
 
 - `-f <privateKeyFilePath>`，商户API私钥文件路径
 - `-k <apiV3Key>`，证书解密的密钥
@@ -22,17 +36,15 @@ Certificate Downloader 是 Java 微信支付 APIv3 平台证书的命令行下�
 
 非必需参数有：
 
-- `-c <wechatpayCertificatePath>`，微信支付平台证书的路径。如果你还没有证书，请先不传该参数。具体请看[常见问题-第一次下载证书](#第一次下载证书)。
+- `-c <wechatpayCertificatePath>`，微信支付平台证书的路径。如果你还没有证书，请先不传该参数。
 
-完整命令如：
+你还可以运行 `java -jar CertificateDownloader.jar -h`，查看帮助：
 
-```
-java -jar CertificateDownloader.jar -k ${apiV3key} -m ${mchId} -f ${mchPrivateKeyFilePath} -s ${mchSerialNo} -o ${outputFilePath} -c ${wechatpayCertificateFilePath}
-```
+![1564047129669](images/help.png)
 
-## 如何保证证书正确
+## 安全性说明
 
-工具已经从以下方面去保证了：
+工具做了以下安全措施：
 
 - **HTTPS**：证书下载请求使用了 HTTPS
 - **AES 加密**：微信支付对证书信息进行了 AES-256-GCM 加密，所以工具得到应答后，会使用**对称密钥**来解密证书（这里需要用户传入对称密钥，出于对**对称密钥**安全的考虑，后续版本将可直接保存未解密的证书，由用户进行解密）
@@ -61,13 +73,20 @@ java -jar CertificateDownloader.jar -k ${apiV3key} -m ${mchId} -f ${mchPrivateKe
 
 ## 常见问题
 
-### 第一次下载证书
+### 如何第一次下载证书
 
 对于微信支付的应答，需要使用平台证书来进行验签；但平台证书只能通过 [获取平台证书接口](https://wechatpay-api.gitbook.io/wechatpay-api-v3/jie-kou-wen-dang/ping-tai-zheng-shu#huo-qu-ping-tai-zheng-shu-lie-biao) 下载，所以当第一次去获取证书时，会出现个“死循环”。
 
 为解决这个“死循环”，可以临时跳过验签，来获得证书。也就是说可以不提供微信支付证书参数（-c 参数）来下载，在下载得到证书后，工具会使用下载得到的证书对报文的签名进行验证。
 
-第一次下载证书后，我们**强烈建议**参考[指引](#如何保证证书正确)，验证证书的真实性。 
+第一次下载证书后，我们**强烈建议**参考[如何保证证书正确](#如何保证证书正确)，验证证书的真实性。 
+
+### 有没有其他语言的下载工具
+
+有的：
+
++ PHP，请参考 [wechatpay-php](https://github.com/wechatpay-apiv3/wechatpay-php#%E5%A6%82%E4%BD%95%E4%B8%8B%E8%BD%BD%E5%B9%B3%E5%8F%B0%E8%AF%81%E4%B9%A6)
++ Go，请参考 [wechatpay_download_certs.go](https://github.com/wechatpay-apiv3/wechatpay-go/blob/main/cmd/wechatpay_download_certs/wechatpay_download_certs.go)
 
 ## 参考
 
