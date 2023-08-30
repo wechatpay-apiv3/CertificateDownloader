@@ -79,7 +79,7 @@ java -jar CertificateDownloader.jar -k ${apiV3key} -m ${mchId} -f ${mchPrivateKe
 
 为解决这个“死循环”，可以临时跳过验签，来获得证书。也就是说可以不提供微信支付证书参数（-c 参数）来下载，在下载得到证书后，工具会使用下载得到的证书对报文的签名进行验证。
 
-第一次下载证书后，我们**强烈建议**参考[如何保证证书正确](#如何保证证书正确)，验证证书的真实性。 
+第一次下载证书后，我们**强烈建议**参考[如何通过证书信任链验证平台证书](https://pay.weixin.qq.com/docs/merchant/development/interface-rules/certificate-faqs.html#%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E8%AF%81%E4%B9%A6%E4%BF%A1%E4%BB%BB%E9%93%BE%E9%AA%8C%E8%AF%81%E5%B9%B3%E5%8F%B0%E8%AF%81%E4%B9%A6)，验证证书的真实性。 
 
 ### 有没有其他语言的下载工具
 
